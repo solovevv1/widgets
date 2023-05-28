@@ -2,19 +2,25 @@ import React from 'react'
 
 const Accordion = ({ items }) => {
 
-const renderedItems = items.map(item => {
-  return <React.Fragment key={item.title}>
-    <div className='title active'>
-      <i className='dropdown icon'></i>{item.title}</div>
-    <div className='content active'>{item.content}</div>
-  </React.Fragment>
-});
+// Helper function for onClick event in the title
+  const onTitleClick = (index) => {
+    console.log("Clicked", index);
+  }
 
-return (
-  <div className='ui styled accordion'>
-    {renderedItems}
-  </div>
-)
+  const renderedItems = items.map((item, index) => {
+    return <React.Fragment key={item.title}>
+      <div className='title active'
+        onClick={() => onTitleClick(index)}>
+        <i className='dropdown icon'></i>{item.title}</div>
+      <div className='content active'>{item.content}</div>
+    </React.Fragment>
+  });
+
+  return (
+    <div className='ui styled accordion'>
+      {renderedItems}
+    </div>
+  )
 }
 
 export default Accordion;
