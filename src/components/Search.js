@@ -20,18 +20,33 @@ const Search = () => {
             });
             setResults(data.query.search);
         };
-        search();
+
+        const timeoutId = setTimeout(() => {
+            if (term) {
+                search();
+            }
+        }, 600);
+
+        return () => {
+            clearTimeout(timeoutId);
+        };
+
     }, [term]); // whenever we rerender the Search component and the term has changed it runs an arrow F in useEffect
 
     const renderedResults = results.map((result) => {
         return (
             <div key={result.pageid} className='item'>
+                <div className='right floated content'>
+                    <a className='ui button'
+                        href={`https://en.wikipedia.org?curid=${result.pageid}`}
+                    >Go</a>
+                </div>
                 <div className='content'>
                     <div className='header'>
                         {result.title}
                     </div>
                     {/* {result.snippet} */}
-                    <span dangerouslySetInnerHTML={{ __html: result.snippet}}></span>
+                    <span dangerouslySetInnerHTML={{ __html: result.snippet }}></span>
                 </div>
             </div>
         );
