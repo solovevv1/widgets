@@ -23,6 +23,20 @@ const Search = () => {
         search();
     }, [term]); // whenever we rerender the Search component and the term has changed it runs an arrow F in useEffect
 
+    const renderedResults = results.map((result) => {
+        return (
+            <div key={result.pageid} className='item'>
+                <div className='content'>
+                    <div className='header'>
+                        {result.title}
+                    </div>
+                    {/* {result.snippet} */}
+                    <span dangerouslySetInnerHTML={{ __html: result.snippet}}></span>
+                </div>
+            </div>
+        );
+    });
+
     return (
         <div>
             <div className='ui form'>
@@ -35,6 +49,7 @@ const Search = () => {
                     />
                 </div>
             </div>
+            <div className='ui celled list'>{renderedResults}</div>
         </div>
     )
 }
