@@ -21,17 +21,21 @@ const Search = () => {
             setResults(data.query.search);
         };
 
-        const timeoutId = setTimeout(() => {
-            if (term) {
-                search();
-            }
-        }, 600);
+        if (term && !results.length) {
+            search();
+        } else {
+            const timeoutId = setTimeout(() => {
+                if (term) {
+                    search();
+                }
+            }, 600);
 
-        return () => {
-            clearTimeout(timeoutId);
+            return () => {
+                clearTimeout(timeoutId);
+            };
         };
 
-    }, [term]); // whenever we rerender the Search component and the term has changed it runs an arrow F in useEffect
+    }, [term, results.length]); // whenever we rerender the Search component and the term has changed it runs an arrow F in useEffect
 
     const renderedResults = results.map((result) => {
         return (
