@@ -5,13 +5,18 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
     const ref = useRef();
 
     useEffect(() => {
-        document.body.addEventListener('click', (event) => {
-            // console.log(event.target);
+        const onBodyClick = (event) => {
             if (ref.current.contains(event.target)) {
                 return;
             }
             setOpen(false);
-        }, { capture: true });
+        };
+
+        document.body.addEventListener('click', onBodyClick);
+
+        return () => {
+            document.body.removeEventListener('click', onBodyClick)
+        }
     }, []);
 
     const renderedOptions = options.map((option) => {
@@ -22,9 +27,10 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
             <div
                 key={option.value}
                 className='item'
-                onClick={() => { 
+                onClick={() => {
                     console.log("Item Click")
-                    onSelectedChange(option) }}
+                    onSelectedChange(option)
+                }}
             >
                 {option.label}
             </div>
@@ -37,7 +43,8 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
                 <label className='label'>Select a Color</label>
                 <div onClick={() => {
                     console.log("Dropdown Click")
-                    setOpen(!open)}}
+                    setOpen(!open)
+                }}
                     className={`ui selection dropdown ${open ? 'visible active' : ''}`}>
                     <i className='dropdown icon'></i>
                     <div className='text'>{selected.label}</div>
