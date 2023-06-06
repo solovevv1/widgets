@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Search = () => {
-    const [term, setTerm] = useState('programming');
+    const [term, setTerm] = useState('');
     const [results, setResults] = useState([]);
 
-    console.log(results)
+    // console.log(results)
 
     useEffect(() => {
         const search = async () => {
@@ -50,7 +50,7 @@ const Search = () => {
                         {result.title}
                     </div>
                     {/* {result.snippet} */}
-                    <span dangerouslySetInnerHTML={{ __html: result.snippet }}></span>
+                    <span dangerouslySetInnerHTML={{ __html: result.snippet }}></span> // the code opens the way to be hacked
                 </div>
             </div>
         );
